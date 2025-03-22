@@ -1,41 +1,49 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-const Home = () => {
-  // Use the useLocation hook to get the current location object
-  const location = useLocation();
+const RegistrationNumberDisplay = () => {
+  // Use the useSearchParams hook to access query parameters
+  const [searchParams] = useSearchParams();
+  const regNo = searchParams.get("regNo"); // Extract the 'regNo' parameter
 
-  // Function to parse query parameters
-  const getQueryParams = () => {
-    const params = new URLSearchParams(location.search);
-    const paramsObject = {};
-
-    // Iterate over all query parameters and add them to the paramsObject
-    for (const [key, value] of params.entries()) {
-      paramsObject[key] = value;
-    }
-
-    return paramsObject;
-  };
-
-  // Get the query parameters
-  const queryParams = getQueryParams();
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Responsible Party Details</h1>
-      {Object.keys(queryParams).length > 0 ? (
-        <ul>
-          {Object.entries(queryParams).map(([key, value]) => (
-            <li key={key}>
-              <strong>{key}:</strong> {value}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No query parameters found.</p>
-      )}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#F5F5F5",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "#FFFFFF",
+          padding: "20px",
+          borderRadius: "8px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          textAlign: "center",
+        }}
+      >
+        <h1 style={{ color: "#1A2A3A", marginBottom: "20px" }}>
+          Accused Vehicle Details
+        </h1>
+        <div
+          style={{
+            backgroundColor: "#F5F5F5",
+            padding: "20px",
+            borderRadius: "4px",
+            border: "2px solid #1A2A3A",
+          }}
+        >
+          <p style={{ color: "#1A2A3A", fontSize: "32px", fontWeight: "bold" }}>
+            {regNo || "No Registration Number Found"}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Home;
+export default RegistrationNumberDisplay;
